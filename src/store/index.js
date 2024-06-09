@@ -1,7 +1,7 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 
 import productsReducer, { fetchProducts } from "../slices/productSlice";
-import cartReducer, { getTotals } from "../slices/cartSlice";
+import cartReducer, { getTotals, populateCart } from "../slices/cartSlice";
 import { productApi } from "../slices/productApi";
 
 export const store = configureStore({
@@ -14,5 +14,7 @@ export const store = configureStore({
         getDefaultMiddleware().concat(productApi.middleware),
 });
 
-store.dispatch(fetchProducts());
+// store.dispatch(fetchProducts());
+store.dispatch(productApi.endpoints.getProducts.initiate());
+store.dispatch(populateCart());
 store.dispatch(getTotals());
